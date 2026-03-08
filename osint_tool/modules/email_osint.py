@@ -18,7 +18,7 @@ import logging
 import re
 import socket
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 import dns.resolver
 import requests
@@ -94,7 +94,7 @@ def _validate_format(email: str) -> bool:
     return bool(_EMAIL_RE.match(email))
 
 
-def _get_mx(domain: str) -> tuple[List[str], Optional[str]]:
+def _get_mx(domain: str) -> Tuple[List[str], Optional[str]]:
     try:
         answers = dns.resolver.resolve(domain, "MX", lifetime=5)
         mx = sorted([str(r.exchange).rstrip(".") for r in answers])
@@ -121,7 +121,7 @@ def _check_gravatar(email: str, session: requests.Session) -> Optional[str]:
     return None
 
 
-def _hibp_breaches(email: str, session: requests.Session) -> tuple[List[BreachInfo], Optional[str]]:
+def _hibp_breaches(email: str, session: requests.Session) -> Tuple[List[BreachInfo], Optional[str]]:
     """
     Query HaveIBeenPwned v3 /breachedaccount endpoint.
 

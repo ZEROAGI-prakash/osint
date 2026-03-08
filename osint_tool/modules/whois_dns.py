@@ -13,7 +13,7 @@ from __future__ import annotations
 import logging
 import socket
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 import dns.resolver
 import dns.reversename
@@ -147,7 +147,7 @@ def _get_dns_records(domain: str) -> DnsRecords:
     return records
 
 
-def _get_subdomains_crtsh(domain: str, session: requests.Session) -> tuple[List[SubdomainEntry], Optional[str]]:
+def _get_subdomains_crtsh(domain: str, session: requests.Session) -> Tuple[List[SubdomainEntry], Optional[str]]:
     """Query crt.sh certificate transparency log for subdomains."""
     url = "https://crt.sh/"
     params = {"q": f"%.{domain}", "output": "json"}
